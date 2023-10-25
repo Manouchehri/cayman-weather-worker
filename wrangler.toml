@@ -1,0 +1,26 @@
+name = "cayman-weather-worker-dev"
+main = "./src/index.ts"
+compatibility_date = "2023-09-04"
+minify = true
+usage_model = "bundled"
+workers_dev = false
+logpush = false
+
+[dev]
+ip = "localhost"
+local_protocol = "http"
+port = 61023
+
+[vars]
+ENVIRONMENT = "dev"
+
+[env.production]
+name = "cayman-weather-worker-dev"
+usage_model = "bundled"
+routes = [
+  { pattern = "https://caymanweather.aimoda.dev/*", zone_name = "aimoda.dev" }
+]
+logpush = true
+
+[env.production.vars]
+ENVIRONMENT = "production"

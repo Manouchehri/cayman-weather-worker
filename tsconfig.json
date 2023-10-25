@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"noEmit": true,
+		"module": "esnext",
+		"target": "es2022",
+		"lib": [
+			"es2022"
+		],
+		"strict": true,
+		"alwaysStrict": true,
+		"preserveConstEnums": true,
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"types": [
+			"@cloudflare/workers-types",
+			"@types/node",
+		],
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": false,
+		"skipLibCheck": true
+	},
+	"include": ["**/*.ts", "**/*.json"],
+	"exclude": [
+    "scripts",
+		"node_modules",
+		"dist",
+		"test"
+	]
+}

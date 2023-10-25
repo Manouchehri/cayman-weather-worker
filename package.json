@@ -1,0 +1,20 @@
+{
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"deploy": "wrangler deploy -e production src/index.ts",
+		"dev": "wrangler dev src/index.ts",
+		"tunnel": "cloudflared tunnel --url http://localhost:61023"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20230922.0",
+		"@types/node": "^20.7.0",
+		"typescript": "^5.2.2",
+		"wrangler": "^3.10.0"
+	},
+	"dependencies": {
+		"@hono/zod-openapi": "^0.7.2",
+		"hono": "^3.8.1"
+	}
+}
