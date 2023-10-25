@@ -9,5 +9,6 @@ wrangler --version
 git clone https://github.com/Manouchehri/cayman-weather-worker.git
 cd cayman-weather-worker/
 # Add package.json, wrangler.toml, tsconfig.json, and src/index.js
+# Cheat code: look at the solution-1 branch
 npm install
 ```
