@@ -188,8 +188,10 @@ app.openapi(routeTodo, async (c) => {
   console.debug(`temp_min at the end: ${temp_min}`)
 
   return c.jsonT({
-    max_temp: 31387,
-    min_temp: 1387,
+    current_temp:{
+      max_temp: parseInt(temp_max),
+      min_temp: parseInt(temp_min)
+    }
   });
 })
 
