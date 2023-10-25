@@ -1,3 +1,8 @@
+#### Windows Users
+```powershell
+Set-ExecutionPolicy Unrestricted
+```
+
 ## System Setup
 ```sh
 npm install -g wrangler 
