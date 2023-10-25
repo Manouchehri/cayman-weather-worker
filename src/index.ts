@@ -109,25 +109,30 @@ class ElementHandler {
     // this.lang = lang;
   // }
 
-  element(element: Element) {
-    console.log(element)
-    // element.setAttribute("lang", this.lang);
-  }
+  // element(element: Element) {
+  //   console.log(element.after('Hello, world!'))
+  //   console.log(element.after('sm-text'))
+  //   console.log(element.setInnerContent('Hello, world!'))
+  //   console.debug(element.getAttribute('sm-text'))
+  //   // element.setAttribute("lang", this.lang);
+  // }
 
-  comments(comment: Comment) {
-    console.log(comment)
-    // An incoming comment
-  }
+  // comments(comment: Comment) {
+  //   // console.log(comment)
+  //   // An incoming comment
+  // }
 
   text(text: Text) {
-    console.log(text)
+    // console.log(text)
+    console.debug(JSON.stringify(text))
+    // console.debug(text.text)
     // An incoming piece of text
   }
 
-  doctype(doctype: Doctype) {
-    console.log(doctype)
-    // An incoming doctype, such as <!DOCTYPE html>
-  }
+  // doctype(doctype: Doctype) {
+  //   // console.log(doctype)
+  //   // An incoming doctype, such as <!DOCTYPE html>
+  // }
 }
 
 app.openapi(routeTodo, async (c) => {
@@ -151,17 +156,24 @@ app.openapi(routeTodo, async (c) => {
   // console.debug(`fetch_result_text: ${await fetch_result.text()}`)
   // return c.jsonT({});
 
+  // 
   const rewriter = new HTMLRewriter()
 
   //new HTMLRewriter().on('*', new ElementHandler()).onDocument(new DocumentHandler());
 
   
   
-  rewriter.on('*', new ElementHandler()); // div or * or head or div.sm-text?
+  rewriter.on('div[class="sm-text"]', new ElementHandler()); // div or * or head or div.sm-text?
 
   await rewriter.transform(fetch_result).text(); // we don't give a crap about the return.
 
-  return c.jsonT({});
+  console.debug("Hey, I made a change.") // console.log works fine too, I just prefer debug for debugging :P 
+  // ctrl+s to save the file for Windows folks, cmd+s for macOS folks.
+
+  return c.jsonT({
+    max_temp: 31387,
+    min_temp: 1387,
+  });
 })
 
 export default app
