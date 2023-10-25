@@ -102,14 +102,42 @@ app.get('/docs/', (c) => {
 `)
 })
 
+class ElementHandler {
+  // lang: string;
+
+  // constructor() {
+    // this.lang = lang;
+  // }
+
+  element(element: Element) {
+    console.log(element)
+    // element.setAttribute("lang", this.lang);
+  }
+
+  comments(comment: Comment) {
+    console.log(comment)
+    // An incoming comment
+  }
+
+  text(text: Text) {
+    console.log(text)
+    // An incoming piece of text
+  }
+
+  doctype(doctype: Doctype) {
+    console.log(doctype)
+    // An incoming doctype, such as <!DOCTYPE html>
+  }
+}
+
 app.openapi(routeTodo, async (c) => {
   const { "todo-id": todo_id } = c.req.valid('param')
   console.log(`todo-id: ${todo_id}`);
-  const fetch_result = await fetch(`https://www.ai.moda/geolocation.json`, {
-    cf: {
-      cacheEverything: true,
-      cacheTtl: 24 * 60 * 60 // cache for 1 day
-    }
+  const fetch_result = await fetch(`https://www.weather.gov.ky/`, {
+    // cf: {
+    //   cacheEverything: true,
+    //   cacheTtl: 24 * 60 * 60 // cache for 1 day
+    // }
   });
 
   if (fetch_result.status == 404) {
@@ -120,9 +148,20 @@ app.openapi(routeTodo, async (c) => {
     return c.jsonT({message: "Unknown error.", status_code: fetch_result.status}, 500);
   }
 
-  const rawText = await fetch_result.text();
+  // console.debug(`fetch_result_text: ${await fetch_result.text()}`)
+  // return c.jsonT({});
 
-  return c.jsonT(JSON.parse(rawText));
+  const rewriter = new HTMLRewriter()
+
+  //new HTMLRewriter().on('*', new ElementHandler()).onDocument(new DocumentHandler());
+
+  
+  
+  rewriter.on('*', new ElementHandler()); // div or * or head or div.sm-text?
+
+  await rewriter.transform(fetch_result).text(); // we don't give a crap about the return.
+
+  return c.jsonT({});
 })
 
 export default app
