@@ -1,0 +1,27 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "Node.js & TypeScript",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers-contrib/features/cloudflare-wrangler:1": {
+			"version": "latest"
+		},
+    "ghcr.io/devcontainers-contrib/features/cloudflared": {}
+	},
+	"postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
+	"remoteUser": "root",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"donjayamanne.githistory",
+				"GitHub.copilot",
+				"eamodio.gitlens",
+				"rvest.vs-code-prettier-eslint",
+				"esbenp.prettier-vscode",
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	}
+}
