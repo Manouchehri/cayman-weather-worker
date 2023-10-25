@@ -102,12 +102,19 @@ app.get('/docs/', (c) => {
 `)
 })
 
+let temp_max: string;
+let temp_min: string;
+
 class ElementHandler {
   // lang: string;
+  // temp_max: string|null;
+  // temp_min: string|null;
 
-  // constructor() {
+  constructor() {
     // this.lang = lang;
-  // }
+    // this.temp_max = null;
+    // this.temp_min = null;
+  }
 
   // element(element: Element) {
   //   console.log(element.after('Hello, world!'))
@@ -124,9 +131,19 @@ class ElementHandler {
 
   text(text: Text) {
     // console.log(text)
-    console.debug(JSON.stringify(text))
-    // console.debug(text.text)
-    // An incoming piece of text
+    // console.debug(JSON.stringify(text))
+    // [0] Max  [1] 87
+     
+    const temp_max_local = text.text.includes("Max") ? text.text.split("Max")[1].trim() : null;
+    if(temp_max_local) {
+      temp_max = temp_max_local;
+      // console.debug(`temp_max: ${temp_max}`)
+    }
+    const temp_min_local = text.text.includes("Min") ? text.text.split("Min")[1].trim() : null;
+    if(temp_min_local) {
+      temp_min = temp_min_local;
+      // console.debug(`temp_min: ${temp_min}`)
+    }
   }
 
   // doctype(doctype: Doctype) {
@@ -162,13 +179,13 @@ app.openapi(routeTodo, async (c) => {
   //new HTMLRewriter().on('*', new ElementHandler()).onDocument(new DocumentHandler());
 
   
-  
-  rewriter.on('div[class="sm-text"]', new ElementHandler()); // div or * or head or div.sm-text?
+  const handler = new ElementHandler();
+  rewriter.on('div[class="sm-text"]', handler); // div or * or head or div.sm-text?
 
   await rewriter.transform(fetch_result).text(); // we don't give a crap about the return.
 
-  console.debug("Hey, I made a change.") // console.log works fine too, I just prefer debug for debugging :P 
-  // ctrl+s to save the file for Windows folks, cmd+s for macOS folks.
+  console.debug(`temp_max at the end: ${temp_max}`)
+  console.debug(`temp_min at the end: ${temp_min}`)
 
   return c.jsonT({
     max_temp: 31387,
