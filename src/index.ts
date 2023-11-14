@@ -72,6 +72,12 @@ app.doc('/openapi.json', {
       name: 'language',
       description: 'en'
     }
+  ],
+  servers: [
+    {
+      url: "https://caymanweather.aimoda.dev",
+      description: "Production server"
+    }
   ]
 })
 
