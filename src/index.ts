@@ -19,9 +19,9 @@ const todo_object = z.object({
 
 const routeTodo = createRoute({
   method: "get",
-  path: "/api/v1.0.0/weather/{todo-id}/current",
+  path: "/api/v1.0.0/weather",
   request: {
-    params: todo_object,
+    // params: todo_object,
   },
   responses: {
     200: {
@@ -153,13 +153,14 @@ class ElementHandler {
 }
 
 app.openapi(routeTodo, async (c) => {
-  const { "todo-id": todo_id } = c.req.valid('param')
-  console.log(`todo-id: ${todo_id}`);
+  // const { "todo-id": todo_id } = c.req.valid('param')
+  // console.log(`todo-id: ${todo_id}`);
+
   const fetch_result = await fetch(`https://www.weather.gov.ky/`, {
-    // cf: {
-    //   cacheEverything: true,
-    //   cacheTtl: 24 * 60 * 60 // cache for 1 day
-    // }
+    cf: {
+      cacheEverything: true,
+      cacheTtl: c.env.ENVIRONMENT === 'dev' ? 24 * 60 * 60 : 60
+    }
   });
 
   if (fetch_result.status == 404) {
@@ -180,7 +181,8 @@ app.openapi(routeTodo, async (c) => {
 
   
   const handler = new ElementHandler();
-  rewriter.on('div[class="sm-text"]', handler); // div or * or head or div.sm-text?
+  // rewriter.on('div[class="sm-text"]', handler); // div or * or head or div.sm-text?
+  rewriter.on('div', handler); // div or * or head or div.sm-text?
 
   await rewriter.transform(fetch_result).text(); // we don't give a crap about the return.
 
