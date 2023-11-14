@@ -20,6 +20,7 @@ const todo_object = z.object({
 const routeTodo = createRoute({
   method: "get",
   path: "/api/v1.0.0/weather",
+  operationId: "get_weather",
   request: {
     // params: todo_object,
   },
