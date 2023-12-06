@@ -9,7 +9,7 @@ logpush = false
 [dev]
 ip = "localhost"
 local_protocol = "http"
-port = 61023
+port = 61024
 
 [vars]
 ENVIRONMENT = "dev"
@@ -18,7 +18,7 @@ ENVIRONMENT = "dev"
 name = "cayman-weather-worker-dev"
 usage_model = "bundled"
 
-# In this example, you'll need to make a record for 100:: on caymanweather.aimoda.dev
+# In this example, you'll need to make a AAAA record for 100:: on caymanweather.aimoda.dev
 # e.g. go to https://dash.cloudflare.com/6873d51718aa43a6389a532434554150/aimoda.dev/dns/records if you worked for us.
 routes = [
   { pattern = "https://caymanweather.aimoda.dev/*", zone_name = "aimoda.dev" }

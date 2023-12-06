@@ -28,7 +28,12 @@ const routeTodo = createRoute({
     200: {
       content: {
         "application/json": {
-          schema: z.object({})
+          schema: z.object({
+            current_temp: z.object({
+              max_temp: z.number().optional().openapi({ example: 87, description: "Current max temperature." }),
+              min_temp: z.number().optional().openapi({ example: 77, description: "Current min temperature." }),
+            }),
+          })
         },
       },
       description: "Fetch weather data from the Cayman Weather site.",
@@ -61,7 +66,7 @@ const app = new OpenAPIHono<Env>()
 
 app.use('*', logger())
 
-app.doc('/openapi.json', {
+app.doc('/openapi.json', c => ({
   openapi: '3.0.0',
   info: {
     version: '1.0.0',
@@ -75,11 +80,11 @@ app.doc('/openapi.json', {
   ],
   servers: [
     {
-      url: "https://caymanweather.aimoda.dev",
-      description: "Production server"
-    }
-  ]
-})
+      url: new URL(c.req.url).origin,
+      description: 'Current environment',
+    },
+  ],
+}))
 
 app.get('/docs/', (c) => {
   return c.html(`<!doctype html>
